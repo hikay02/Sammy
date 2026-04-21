@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Ike - QA Tester & Prompt Engineer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fontsource@latest/inter/400.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fontsource@latest/inter/500.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fontsource@latest/inter/600.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fontsource@latest/inter/700.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- UPDATED: New EmailJS SDK v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#8b5cf6',
+                        dark: '#0f172a',
+                        darker: '#020617',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: #020617; color: #e2e8f0; }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .nav-glass {
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .hero-gradient {
+            background: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.1);
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        
+        .skill-bar {
+            transition: width 1.2s ease-in-out;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        .btn-loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid transparent;
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-glass fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#home" class="text-xl font-bold gradient-text">JI</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="nav-link text-sm font-medium hover:text-white transition-colors">Home</a>
+                <a href="#about" class="nav-link text-sm font-medium hover:text-white transition-colors">About</a>
+                <a href="#education" class="nav-link text-sm font-medium hover:text-white transition-colors">Education</a>
+                <a href="#projects" class="nav-link text-sm font-medium hover:text-white transition-colors">Projects</a>
+                <a href="#content" class="nav-link text-sm font-medium hover:text-white transition-colors">Content</a>
+                <a href="#skills" class="nav-link text-sm font-medium hover:text-white transition-colors">Skills</a>
+                <a href="#contact" class="px-4 py-2 bg-gradient-to-r from-primary to-secondary rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">Contact</a>
+            </div>
+            <button id="menuBtn" class="md:hidden text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-64 h-full bg-darker z-50 p-6 pt-20">
+        <button id="closeMenu" class="absolute top-4 right-4 text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+        <div class="flex flex-col space-y-6">
+            <a href="#home" class="mobile-nav-link text-lg font-medium hover:text-primary transition-colors">Home</a>
+            <a href="#about" class="mobile-nav-link text-lg font-medium hover:text-primary transition-colors">About</a>
+            <a href="#education" class="mobile-nav-link text-lg font-medium hover:text-primary transition-colors">Education</a>
+            <a href="#projects" class="mobile-nav-link text-lg font-medium hover:text-primary transition-colors">Projects</a>
+            <a href="#content" class="mobile-nav-link text-lg font-medium hover:text-primary transition-colors">Content</a>
+            <a href="#skills" class="mobile-nav-link text-lg font-medium hover:text-primary transition-colors">Skills</a>
+            <a href="#contact" class="text-lg font-medium text-primary">Contact</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center hero-gradient pt-20">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div class="text-center md:text-left">
+                <div class="animate-fade-in-up delay-100">
+                    <span class="inline-block px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm font-medium mb-6">
+                        🇳🇬 Based in Lagos, Nigeria
+                    </span>
+                </div>
+                <h1 class="animate-fade-in-up delay-200 text-5xl md:text-6xl font-bold mb-4">
+                    Hi, I'm <span class="gradient-text">John Ike</span>
+                </h1>
+                <p class="animate-fade-in-up delay-300 text-xl text-slate-400 mb-8">
+                    QA Specialist, Prompt Engineer & AI Content Creator crafting high-quality digital experiences from Lagos to the world
+                </p>
+                <div class="animate-fade-in-up delay-400 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#projects" class="px-8 py-3 bg-gradient-to-r from-primary to-secondary rounded-lg font-medium hover:opacity-90 transition-opacity text-center">
+                        View Projects
+                    </a>
+                    <a href="#contact" class="px-8 py-3 border border-slate-600 rounded-lg font-medium hover:border-primary hover:text-primary transition-all text-center">
+                        Get in Touch
+                    </a>
+                </div>
+            </div>
+            <div class="animate-fade-in-up delay-500 flex justify-center">
+                <div class="relative floating">
+                    <div class="w-72 h-72 md:w-80 md:h-80 rounded-2xl overflow-hidden glass-card p-2">
+                        <img src="hikay.jpeg" alt="John Ike" class="w-full h-full object-cover rounded-xl">
+                    </div>
+                    <div class="absolute -top-4 -right-4 px-4 py-2 glass-card rounded-lg text-sm font-medium">
+                        🇳🇬 Lagos, NG
+                    </div>
+                    <div class="absolute -bottom-4 -left-4 px-4 py-2 glass-card rounded-lg text-sm font-medium">
+                        🎨 AI Content Creator
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 scroll-animate">
+                <h2 class="text-4xl font-bold mb-4">About <span class="gradient-text">Me</span></h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Learn more about my journey and what drives me</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card rounded-2xl p-8 card-hover scroll-animate">
+                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Quality Assurance</h3>
+                    <p class="text-slate-400">Expert in designing comprehensive test strategies, automating regression suites, and ensuring software reliability across web, mobile, and API platforms.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-8 card-hover scroll-animate">
+                    <div class="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Prompt Engineering</h3>
+                    <p class="text-slate-400">Specialized in crafting, testing, and optimizing LLM prompts for consistent, high-quality AI outputs that align with creative and technical goals.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-8 card-hover scroll-animate">
+                    <div class="w-14 h-14 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">AI Content Creation</h3>
+                    <p class="text-slate-400">Creating captivating cat content, generating stunning images, and producing engaging videos using advanced AI tools and expert prompt engineering.</p>
+                </div>
+            </div>
+            <div class="mt-16 glass-card rounded-2xl p-8 md:p-12 scroll-animate">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">My Journey</h3>
+                        <p class="text-slate-400 mb-4">I started my career in manual testing, quickly recognizing the power of automation to scale quality efforts. Over the years, I transitioned into AI testing as large language models reshaped software development.</p>
+                        <p class="text-slate-400 mb-4">Based in the vibrant tech hub of Lagos, Nigeria, I combine rigorous QA practices with advanced prompt engineering to ensure AI-powered applications deliver accurate, safe, and user-aligned results. My passion extends to creating AI-generated content, from adorable cat stories to stunning visual art.</p>
+                        <p class="text-slate-400">When I'm not testing or optimizing prompts, you'll find me creating AI content, exploring new AI tools, or enjoying the dynamic culture of Lagos.</p>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                        <div class="text-center p-6 bg-primary/5 rounded-xl">
+                            <div class="text-3xl font-bold gradient-text mb-1">3+</div>
+                            <div class="text-sm text-slate-400">Years Experience</div>
+                        </div>
+                        <div class="text-center p-6 bg-secondary/5 rounded-xl">
+                            <div class="text-3xl font-bold gradient-text mb-1">10+</div>
+                            <div class="text-sm text-slate-400">Projects Delivered</div>
+                        </div>
+                        <div class="text-center p-6 bg-purple-500/5 rounded-xl col-span-2 md:col-span-1">
+                            <div class="text-3xl font-bold gradient-text mb-1">500+</div>
+                            <div class="text-sm text-slate-400">AI Prompts Crafted</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-24 relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent"></div>
+        <div class="max-w-5xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 scroll-animate">
+                <h2 class="text-4xl font-bold mb-4">Education <span class="gradient-text">Background</span></h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">My academic journey and professional certifications</p>
+            </div>
+            <div class="relative">
+                <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-primary via-secondary to-transparent"></div>
+                <div class="space-y-12">
+                    <!-- Item 1 -->
+                    <div class="relative scroll-animate">
+                        <div class="md:flex md:items-center">
+                            <div class="md:w-1/2 md:pr-12 pl-14 md:pl-0">
+                                <div class="glass-card rounded-2xl p-6 card-hover">
+                                    <span class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm rounded-full mb-3">2024 - 2025</span>
+                                    <h3 class="text-xl font-bold mb-2">Master of Science in Human-AI Interaction</h3>
+                                    <p class="text-primary font-medium mb-3">Georgia Tech</p>
+                                    <p class="text-slate-400 text-sm">Focused on AI evaluation metrics, prompt optimization, and human-centered testing methodologies.</p>
+                                    <div class="mt-4 flex flex-wrap gap-2">
+                                        <span class="px-3 py-1 bg-slate-800 rounded-full text-xs text-slate-400">AI Evaluation</span>
+                                        <span class="px-3 py-1 bg-slate-800 rounded-full text-xs text-slate-400">Prompt Design</span>
+                                        <span class="px-3 py-1 bg-slate-800 rounded-full text-xs text-slate-400">Research</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="absolute left-0 md:left-1/2 md:-translate-x-1/2 top-6 w-8 h-8 bg-primary rounded-full border-4 border-darker flex items-center justify-center">
+                                <div class="w-2 h-2 bg-primary rounded-full"></div>
+                            </div>
+                            <div class="hidden md:block md:w-1/2"></div>
+                        </div>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="relative scroll-animate">
+                        <div class="md:flex md:items-center">
+                            <div class="hidden md:block md:w-1/2"></div>
+                            <div class="absolute left-0 md:left-1/2 md:-translate-x-1/2 top-6 w-8 h-8 bg-secondary rounded-full border-4 border-darker flex items-center justify-center">
+                                <div class="w-2 h-2 bg-secondary rounded-full"></div>
+                            </div>
+                            <div class="md:w-1/2 md:pl-12 pl-14">
+                                <div class="glass-card rounded-2xl p-6 card-hover">
+                                    <span class="inline-block px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full mb-3">2017 - 2021</span>
+                                    <h3 class="text-xl font-bold mb-2">Higher National Diploma in Environmental Biology</h3>
+                                    <p class="text-secondary font-medium mb-3">Federal Polytechnic Ilaro, Ogun State</p>
+                                    <p class="text-slate-400 text-sm">Graduated with Upper Credit. Developed a strong foundation in scientific research, data analysis, and ecological systems.</p>
+                                    <div class="mt-4 flex flex-wrap gap-2">
+                                        <span class="px-3 py-1 bg-slate-800 rounded-full text-xs text-slate-400">Environmental Biology</span>
+                                        <span class="px-3 py-1 bg-slate-800 rounded-full text-xs text-slate-400">Research</span>
+                                        <span class="px-3 py-1 bg-slate-800 rounded-full text-xs text-slate-400">Data Analysis</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="relative scroll-animate">
+                        <div class="md:flex md:items-center">
+                            <div class="md:w-1/2 md:pr-12 pl-14 md:pl-0">
+                                <div class="glass-card rounded-2xl p-6 card-hover">
+                                    <span class="inline-block px-3 py-1 bg-purple-500/10 text-purple-400 text-sm rounded-full mb-3">2023</span>
+                                    <h3 class="text-xl font-bold mb-2">Prompt Engineering & AI Content Creation</h3>
+                                    <p class="text-purple-400 font-medium mb-3">DeepLearning.AI / AWS</p>
+                                    <p class="text-slate-400 text-sm">Advanced certification in LLM prompt optimization, AI image/video generation workflows, and automated content quality evaluation pipelines.</p>
+                                    <div class="mt-4 flex flex-wrap gap-2">
+                                        <span class="px-3 py-1 bg-slate-800 rounded-full text-xs text-slate-400">AI Content Gen</span>
+                                        <span class="px-3 py-1 bg-slate-800 rounded-full text-xs text-slate-400">Prompt Design</span>
+                                        <span class="px-3 py-1 bg-slate-800 rounded-full text-xs text-slate-400">Certified</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="absolute left-0 md:left-1/2 md:-translate-x-1/2 top-6 w-8 h-8 bg-purple-500 rounded-full border-4 border-darker flex items-center justify-center">
+                                <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
+                            </div>
+                            <div class="hidden md:block md:w-1/2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 scroll-animate">
+                <h2 class="text-4xl font-bold mb-4">Project <span class="gradient-text">Experience</span></h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Selected projects that showcase my QA and AI expertise</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-card rounded-2xl overflow-hidden card-hover scroll-animate group">
+                    <div class="h-48 bg-gradient-to-br from-primary/20 to-secondary/20 relative overflow-hidden">
+                        <svg viewBox="0 0 400 200" class="w-full h-full">
+                            <defs><linearGradient id="p1Grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6366f1;stop-opacity:0.3" /><stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.1" /></linearGradient></defs>
+                            <rect width="400" height="200" fill="url(#p1Grad)"/>
+                            <rect x="40" y="40" width="320" height="120" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+                            <circle cx="100" cy="100" r="20" fill="#475569"/><path d="M85 100 L105 120 L130 80" stroke="#6366f1" stroke-width="2" fill="none"/>
+                            <rect x="220" y="70" width="100" height="6" rx="3" fill="#334155"/><rect x="220" y="85" width="80" height="6" rx="3" fill="#334155"/><rect x="220" y="100" width="90" height="6" rx="3" fill="#334155"/>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold mb-2">AutoTest Framework</h3>
+                        <p class="text-slate-400 text-sm mb-4">Scalable cross-browser automation suite for enterprise web apps. Reduced regression testing time by 75%.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">Playwright</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">TypeScript</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">GitHub Actions</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl overflow-hidden card-hover scroll-animate group">
+                    <div class="h-48 bg-gradient-to-br from-secondary/20 to-purple-500/20 relative overflow-hidden">
+                        <svg viewBox="0 0 400 200" class="w-full h-full">
+                            <defs><linearGradient id="p2Grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.3" /><stop offset="100%" style="stop-color:#a855f7;stop-opacity:0.1" /></linearGradient></defs>
+                            <rect width="400" height="200" fill="url(#p2Grad)"/>
+                            <rect x="60" y="50" width="280" height="100" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+                            <path d="M80 80 Q120 60 160 90 T240 70 T300 90" stroke="#8b5cf6" stroke-width="2" fill="none"/>
+                            <rect x="100" y="110" width="200" height="20" rx="10" fill="#334155"/><text x="200" y="124" text-anchor="middle" fill="white" font-size="10">Optimization Score: 94%</text>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold mb-2">PromptCraft Studio</h3>
+                        <p class="text-slate-400 text-sm mb-4">Interactive prompt versioning and A/B testing platform for LLM output consistency.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-secondary/10 text-secondary text-xs rounded-full">Python</span>
+                            <span class="px-3 py-1 bg-secondary/10 text-secondary text-xs rounded-full">LangChain</span>
+                            <span class="px-3 py-1 bg-secondary/10 text-secondary text-xs rounded-full">Streamlit</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl overflow-hidden card-hover scroll-animate group">
+                    <div class="h-48 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 relative overflow-hidden">
+                        <svg viewBox="0 0 400 200" class="w-full h-full">
+                            <defs><linearGradient id="p3Grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.3" /><stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.1" /></linearGradient></defs>
+                            <rect width="400" height="200" fill="url(#p3Grad)"/>
+                            <rect x="100" y="90" width="95" height="60" rx="6" fill="#3b82f6" opacity="0.2"/><rect x="205" y="90" width="95" height="60" rx="6" fill="#06b6d4" opacity="0.2"/>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold mb-2">AI Eval Dashboard</h3>
+                        <p class="text-slate-400 text-sm mb-4">Automated evaluation pipeline for LLM outputs. Monitors accuracy, toxicity, and bias.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-xs rounded-full">Python</span>
+                            <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-xs rounded-full">Ragas</span>
+                            <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-xs rounded-full">Docker</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Content Creation Section -->
+    <section id="content" class="py-24 relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-secondary/5 to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 scroll-animate">
+                <h2 class="text-4xl font-bold mb-4">AI Content <span class="gradient-text">Creation</span></h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Leveraging prompt engineering to generate captivating content across multiple formats</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="glass-card rounded-2xl p-8 card-hover scroll-animate">
+                    <div class="w-16 h-16 bg-orange-500/10 rounded-2xl flex items-center justify-center mb-6 mx-auto"><span class="text-4xl">🐱</span></div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Cat Content Creation</h3>
+                    <p class="text-slate-400 text-center mb-6">Crafting adorable, engaging cat-themed stories, social media posts, and narratives using advanced AI prompt engineering.</p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-slate-800/50 rounded-xl p-3 text-center"><div class="text-2xl mb-1">🐈</div><div class="text-xs text-slate-400">Cat Stories</div></div>
+                        <div class="bg-slate-800/50 rounded-xl p-3 text-center"><div class="text-2xl mb-1">📱</div><div class="text-xs text-slate-400">Social Posts</div></div>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-8 card-hover scroll-animate">
+                    <div class="w-16 h-16 bg-pink-500/10 rounded-2xl flex items-center justify-center mb-6 mx-auto"><span class="text-4xl">🖼️</span></div>
+                    <h3 class="text-xl font-bold mb-4 text-center">AI Image Generation</h3>
+                    <p class="text-slate-400 text-center mb-6">Creating stunning, high-quality images using cutting-edge AI models through expert prompt engineering.</p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-slate-800/50 rounded-xl p-3 text-center"><div class="text-2xl mb-1">🎨</div><div class="text-xs text-slate-400">Digital Art</div></div>
+                        <div class="bg-slate-800/50 rounded-xl p-3 text-center"><div class="text-2xl mb-1">📸</div><div class="text-xs text-slate-400">Photography</div></div>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-8 card-hover scroll-animate">
+                    <div class="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mb-6 mx-auto"><span class="text-4xl">🎬</span></div>
+                    <h3 class="text-xl font-bold mb-4 text-center">AI Video Generation</h3>
+                    <p class="text-slate-400 text-center mb-6">Producing engaging videos through AI-powered generation tools for social media and marketing.</p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-slate-800/50 rounded-xl p-3 text-center"><div class="text-2xl mb-1">🎞️</div><div class="text-xs text-slate-400">Short Clips</div></div>
+                        <div class="bg-slate-800/50 rounded-xl p-3 text-center"><div class="text-2xl mb-1">📊</div><div class="text-xs text-slate-400">Explainers</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card rounded-2xl p-8 md:p-12 scroll-animate">
+                <h3 class="text-2xl font-bold mb-8 text-center">Recent Content Examples</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-slate-800/50 rounded-xl p-6 hover:bg-slate-800/70 transition-colors">
+                        <div class="text-3xl mb-4">🐈‍⬛</div>
+                        <h4 class="font-bold mb-2">Lagos Cat Chronicles</h4>
+                        <p class="text-slate-400 text-sm mb-4">AI-generated cat stories set in the vibrant streets of Lagos, blending local culture with adorable feline adventures.</p>
+                        <div class="flex items-center gap-2 text-xs text-slate-500"><span>Generated via GPT-4</span><span>•</span><span>Prompt Engineered</span></div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-xl p-6 hover:bg-slate-800/70 transition-colors">
+                        <div class="text-3xl mb-4">🖼️</div>
+                        <h4 class="font-bold mb-2">Afrofuturistic Portraits</h4>
+                        <p class="text-slate-400 text-sm mb-4">AI-generated artwork combining Nigerian cultural elements with futuristic aesthetics using carefully crafted prompts.</p>
+                        <div class="flex items-center gap-2 text-xs text-slate-500"><span>Generated via Midjourney</span><span>•</span><span>Prompt Optimized</span></div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-xl p-6 hover:bg-slate-800/70 transition-colors">
+                        <div class="text-3xl mb-4">🎬</div>
+                        <h4 class="font-bold mb-2">AI Pet Video Series</h4>
+                        <p class="text-slate-400 text-sm mb-4">Short-form video content featuring AI-generated pet animations and narratives for social media engagement.</p>
+                        <div class="flex items-center gap-2 text-xs text-slate-500 mb-4"><span>Generated via Runway ML</span><span>•</span><span>Prompt Designed</span></div>
+                        <a href="https://www.facebook.com/share/1E9NDa96NE/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600/20 border border-blue-500/30 rounded-lg text-blue-400 text-sm font-medium hover:bg-blue-600/30 transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                            Watch Cat Video
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-secondary/5 to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 scroll-animate">
+                <h2 class="text-4xl font-bold mb-4">Technical <span class="gradient-text">Skills</span></h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Tools and methodologies I leverage daily</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="scroll-animate">
+                    <h3 class="text-xl font-bold mb-8">QA Automation & Testing</h3>
+                    <div class="space-y-6">
+                        <div><div class="flex justify-between mb-2"><span class="font-medium">Playwright / Cypress / Selenium</span><span class="text-primary">95%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="skill-bar h-full bg-gradient-to-r from-primary to-secondary rounded-full" data-width="95%"></div></div></div>
+                        <div><div class="flex justify-between mb-2"><span class="font-medium">Test Strategy & Planning</span><span class="text-primary">92%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="skill-bar h-full bg-gradient-to-r from-primary to-secondary rounded-full" data-width="92%"></div></div></div>
+                        <div><div class="flex justify-between mb-2"><span class="font-medium">API Testing (Postman/RestAssured)</span><span class="text-primary">90%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="skill-bar h-full bg-gradient-to-r from-primary to-secondary rounded-full" data-width="90%"></div></div></div>
+                        <div><div class="flex justify-between mb-2"><span class="font-medium">Python / JavaScript Scripting</span><span class="text-primary">88%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="skill-bar h-full bg-gradient-to-r from-primary to-secondary rounded-full" data-width="88%"></div></div></div>
+                        <div><div class="flex justify-between mb-2"><span class="font-medium">CI/CD & Test Integration</span><span class="text-primary">85%</span></div><div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="skill-bar h-full bg-gradient-to-r from-primary to-secondary rounded-full" data-width="85%"></div></div></div>
+                    </div>
+                </div>
+                <div class="scroll-animate">
+                    <h3 class="text-xl font-bold mb-8">Prompt Engineering & AI</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass-card rounded-xl p-4 text-center card-hover"><div class="text-2xl mb-2">🤖</div><div class="font-medium text-sm">LLM Prompt Design</div></div>
+                        <div class="glass-card rounded-xl p-4 text-center card-hover"><div class="text-2xl mb-2">📊</div><div class="font-medium text-sm">AI Evaluation (Ragas)</div></div>
+                        <div class="glass-card rounded-xl p-4 text-center card-hover"><div class="text-2xl mb-2">🎨</div><div class="font-medium text-sm">AI Image Generation</div></div>
+                        <div class="glass-card rounded-xl p-4 text-center card-hover"><div class="text-2xl mb-2">🎬</div><div class="font-medium text-sm">AI Video Creation</div></div>
+                        <div class="glass-card rounded-xl p-4 text-center card-hover"><div class="text-2xl mb-2">🐱</div><div class="font-medium text-sm">Content Creation</div></div>
+                        <div class="glass-card rounded-xl p-4 text-center card-hover"><div class="text-2xl mb-2">🔗</div><div class="font-medium text-sm">LangChain</div></div>
+                        <div class="glass-card rounded-xl p-4 text-center card-hover"><div class="text-2xl mb-2">🛠️</div><div class="font-medium text-sm">JIRA / TestRail</div></div>
+                        <div class="glass-card rounded-xl p-4 text-center card-hover"><div class="text-2xl mb-2">☁️</div><div class="font-medium text-sm">Cloud Testing</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 relative">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16 scroll-animate">
+                <h2 class="text-4xl font-bold mb-4">Get In <span class="gradient-text">Touch</span></h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Need QA automation, AI testing, prompt engineering, or content creation? Let's connect!</p>
+            </div>
+            <div class="glass-card rounded-2xl p-8 md:p-12 scroll-animate">
+                <form id="contactForm" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Name</label>
+                            <input type="text" id="userName" name="from_name" placeholder="Your name" class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Email</label>
+                            <input type="email" id="userEmail" name="from_email" placeholder="your@email.com" class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Subject</label>
+                        <input type="text" id="subject" name="subject" placeholder="QA / AI / Content Inquiry" class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Message</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Tell me about your project needs..." class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all resize-none" required></textarea>
+                    </div>
+                    <button type="submit" id="submitBtn" class="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-primary to-secondary rounded-lg font-medium hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                        <span id="btnText" class="flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            Send Message
+                        </span>
+                        <span id="btnLoading" class="hidden items-center gap-2">
+                            <div class="spinner"></div>
+                            Sending...
+                        </span>
+                    </button>
+                </form>
+                <div id="successMsg" class="hidden mt-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-center">
+                    ✅ Message sent successfully! I'll get back to you soon.
+                </div>
+                <div id="errorMsg" class="hidden mt-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-center">
+                    ❌ Something went wrong. Please try again or email me directly.
+                </div>
+            </div>
+            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 text-center scroll-animate">
+                <a href="mailto:johnikechukwusamuel@gmail.com" class="glass-card rounded-xl p-4 md:p-6 card-hover">
+                    <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    </div>
+                    <div class="font-medium text-sm">Email</div><div class="text-xs text-slate-400 mt-1 truncate px-1">johnikechukwusamuel@gmail.com</div>
+                </a>
+                <a href="https://github.com/hikay02" target="_blank" class="glass-card rounded-xl p-4 md:p-6 card-hover">
+                    <div class="w-12 h-12 bg-gray-100/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 2.618 0z"/></svg>
+                    </div>
+                    <div class="font-medium text-sm">GitHub</div><div class="text-xs text-slate-400 mt-1">hikay02</div>
+                </a>
+                <a href="https://twitter.com/sammy_hikay" target="_blank" class="glass-card rounded-xl p-4 md:p-6 card-hover">
+                    <div class="w-12 h-12 bg-blue-400/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </div>
+                    <div class="font-medium text-sm">X (Twitter)</div><div class="text-xs text-slate-400 mt-1">sammy_hikay</div>
+                </a>
+                <a href="https://wa.me/2347039655435" target="_blank" class="glass-card rounded-xl p-4 md:p-6 card-hover">
+                    <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    </div>
+                    <div class="font-medium text-sm">WhatsApp</div><div class="text-xs text-slate-400 mt-1">07039655435</div>
+                </a>
+            </div>
+            <div class="mt-8 text-center scroll-animate">
+                <div class="inline-flex items-center gap-2 px-6 py-3 glass-card rounded-full">
+                    <span class="text-lg">📍</span>
+                    <span class="text-slate-300 font-medium">Lagos, Nigeria 🇳🇬</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-slate-500 text-sm">© 2026 John Ike. Built with precision, tested thoroughly, crafted with creativity.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==========================================
+        // EMAILJS CONFIGURATION (UPDATED FOR SDK v4)
+        // ==========================================
+        const SERVICE_ID = "service_gra1ccw";   // Your EmailJS Service ID
+        const TEMPLATE_ID = "template_4vexe2g"; // Your EmailJS Template ID
+        const PUBLIC_KEY = "Fw3c7H4wV8qikEeTN"; // Your EmailJS Public Key
+        // ==========================================
+
+        // Contact Form Handler with EmailJS (SDK v4 compatible)
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnLoading = document.getElementById('btnLoading');
+            const successMsg = document.getElementById('successMsg');
+            const errorMsg = document.getElementById('errorMsg');
+            
+            // Show loading state
+            submitBtn.classList.add('btn-loading');
+            btnText.classList.add('hidden');
+            btnLoading.classList.remove('hidden');
+            btnLoading.classList.add('flex');
+            successMsg.classList.add('hidden');
+            errorMsg.classList.add('hidden');
+
+            const templateParams = {
+                from_name: document.getElementById('userName').value,
+                from_email: document.getElementById('userEmail').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value,
+                to_email: 'johnikechukwusamuel@gmail.com'
+            };
+
+            // Updated call: Includes publicKey object
+            emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, { publicKey: PUBLIC_KEY })
+                .then(function() {
+                    submitBtn.classList.remove('btn-loading');
+                    btnText.classList.remove('hidden');
+                    btnLoading.classList.add('hidden');
+                    btnLoading.classList.remove('flex');
+                    successMsg.classList.remove('hidden');
+                    document.getElementById('contactForm').reset();
+                    
+                    setTimeout(() => {
+                        successMsg.classList.add('hidden');
+                    }, 5000);
+                }, function(error) {
+                    console.error('EmailJS Error:', error);
+                    submitBtn.classList.remove('btn-loading');
+                    btnText.classList.remove('hidden');
+                    btnLoading.classList.add('hidden');
+                    btnLoading.classList.remove('flex');
+                    errorMsg.classList.remove('hidden');
+                    
+                    setTimeout(() => {
+                        errorMsg.classList.add('hidden');
+                    }, 5000);
+                });
+        });
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenu = document.getElementById('closeMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        menuBtn.addEventListener('click', () => mobileMenu.classList.add('open'));
+        closeMenu.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        });
+
+        // Scroll Animations
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    entry.target.style.opacity = '1';
+                    const skillBars = entry.target.querySelectorAll('.skill-bar');
+                    skillBars.forEach(bar => { bar.style.width = bar.dataset.width; });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-animate').forEach(el => {
+            el.style.opacity = '0';
+            observer.observe(el);
+        });
+
+        document.querySelectorAll('.skill-bar').forEach(bar => { bar.style.width = '0'; });
+
+        // Active nav link on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
